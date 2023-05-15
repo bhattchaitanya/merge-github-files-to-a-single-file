@@ -1,4 +1,3 @@
-# merge-github-files-to-a-single-file
 #!/bin/bash
 
 read -p "Enter the directory to crawl: " directory
@@ -25,6 +24,15 @@ process_directory() {
 
 # Check if directory exists
 if [ -d "$directory" ]; then
+    # Process files in the given directory
+    for file in "$directory"/*; do
+        if [ -f "$file" ]; then
+            echo "Processing $file"
+            # Comment with file name
+            echo -e "\n# File: $file\n" >> "$output_file"
+            cat "$file" >> "$output_file"
+        fi
+    done
     # Start processing from the given directory
     process_directory "$directory"
 else
